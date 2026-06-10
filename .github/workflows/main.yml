@@ -31,6 +31,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      # 👇 ЭТОТ ШАГ ИСПРАВЛЯЕТ ОШИБКУ 126
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
       - name: Build WASM distribution
         run: ./gradlew :webApp:wasmJsBrowserDistribution --no-daemon
 
@@ -38,9 +42,6 @@ jobs:
         run: |
           echo "=== Contents of productionExecutable ==="
           ls -la webApp/build/dist/wasmJs/productionExecutable/
-          echo "=== Checking for key files ==="
-          test -f webApp/build/dist/wasmJs/productionExecutable/index.html && echo "✓ index.html found" || echo "✗ index.html MISSING"
-          test -f webApp/build/dist/wasmJs/productionExecutable/webApp.js && echo "✓ webApp.js found" || echo "✗ webApp.js MISSING"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
