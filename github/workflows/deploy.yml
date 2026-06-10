@@ -34,6 +34,14 @@ jobs:
       - name: Build WASM distribution
         run: ./gradlew :webApp:wasmJsBrowserDistribution --no-daemon
 
+      - name: Verify build output
+        run: |
+          echo "=== Contents of productionExecutable ==="
+          ls -la webApp/build/dist/wasmJs/productionExecutable/
+          echo "=== Checking for key files ==="
+          test -f webApp/build/dist/wasmJs/productionExecutable/index.html && echo "✓ index.html found" || echo "✗ index.html MISSING"
+          test -f webApp/build/dist/wasmJs/productionExecutable/webApp.js && echo "✓ webApp.js found" || echo "✗ webApp.js MISSING"
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

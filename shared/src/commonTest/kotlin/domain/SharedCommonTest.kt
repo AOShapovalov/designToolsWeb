@@ -1,4 +1,4 @@
-package sao.web
+package domain
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
